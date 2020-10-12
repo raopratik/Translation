@@ -12,7 +12,9 @@ class Translation(data.Dataset):
         return len(self.input_dict["hrl"])
 
     def __getitem__(self, index):
-        hrl = np.array(self.input_dict["hrl"][index])
-        lrl = np.array(self.input_dict["lrl"][index])
+        hrl_src = np.array(self.input_dict["hrl"]['input_ids'][index])
+        lrl_src = np.array(self.input_dict["lrl"]['input_ids'][index])
+        hrl_att = np.array(self.input_dict["hrl"]['attention_ids'][index])
+        lrl_att = np.array(self.input_dict["lrl"]['attention_ids'][index])
 
-        return hrl, lrl
+        return hrl_src, lrl_src, hrl_att, lrl_att
