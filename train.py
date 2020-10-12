@@ -5,7 +5,7 @@ sys.path.append(".")
 import torch
 from preprocess import Preprocess
 from model import Encoder
-import constants import con
+import constants as con
 from torch import optim
 
 
@@ -17,7 +17,7 @@ class PretrainingTrainer:
 
     def setup_preprocessed_data(self):
         self.preprocessor = Preprocess()
-        self.preprocessor.preprocess.setup()
+        self.preprocessor.setup()
 
     def setup_model(self):
         # Create multilingual vocabulary
@@ -40,7 +40,7 @@ class PretrainingTrainer:
         batch_correct = 0
         total_correct = 0
         index = 0
-        for hrl_src, lrl_src, hrl_att, lrl_att in self.preprocessor.train_loader:
+        for hrl_src, lrl_src, hrl_att, lrl_att in train_loader:
             logits = self.model(hrl_src)
             print(logits.shape)
             break
