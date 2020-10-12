@@ -63,14 +63,14 @@ class Preprocess:
 
     def tokenize_language(self, data):
         return self.tokenizer(data, return_tensors="pt", padding="max_length",
-                              max_length=128)
+                              max_length=256)
 
     def get_loaders(self):
         train_dataset = Translation(input_dict=self.translation_tokenization["train"])
         dev_dataset = Translation(input_dict=self.translation_tokenization["dev"])
         test_dataset = Translation(input_dict=self.translation_tokenization["test"])
 
-        loader_args = dict(shuffle=True, batch_size=8, num_workers=8,
+        loader_args = dict(shuffle=True, batch_size=16, num_workers=8,
                            pin_memory=True)
 
         self.train_loaders = data.DataLoader(train_dataset, **loader_args)
@@ -85,3 +85,4 @@ class Preprocess:
 if __name__ == '__main__':
     preprocess = Preprocess()
     preprocess.setup()
+

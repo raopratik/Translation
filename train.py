@@ -4,8 +4,8 @@ sys.path.append(".")
 
 import torch
 from preprocess import Preprocess
-from model import Translation
-from constants import con
+from model import Encoder
+import constants import con
 from torch import optim
 
 
@@ -21,7 +21,7 @@ class PretrainingTrainer:
 
     def setup_model(self):
         # Create multilingual vocabulary
-        self.model = Translation()
+        self.model = Encoder()
 
         if con.CUDA:
             self.model = self.model.cuda()
@@ -40,8 +40,8 @@ class PretrainingTrainer:
         batch_correct = 0
         total_correct = 0
         index = 0
-        for hrl_src, lrl_src, hrl_att, lrl_att:
-            logits = self.model(hrl_src, lrl_src, hrl_att, lrl_att)
+        for hrl_src, lrl_src, hrl_att, lrl_att in self.preprocessor.train_loader:
+            logits = self.model(hrl_src)
             print(logits.shape)
             break
             # self.optimizer.zero_grad()
@@ -61,3 +61,4 @@ class PretrainingTrainer:
 if __name__ == '__main__':
     trainer = PretrainingTrainer()
     trainer.run_pretraining()
+
